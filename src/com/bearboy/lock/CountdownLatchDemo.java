@@ -3,7 +3,8 @@ package com.bearboy.lock;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * 创建6个线程去执行任务，每个线程执行任务完成后，都进行计数器减1，直到减到0后，所有任务都运行完成
+ * 创建6个线程去执行任务，每个线程执行任务完成后，都进行计数器减1，直到减到0后，所有任务都运行完成。
+ * 如果计数器不到0,主线程一直会处于等待状态，无法停止
  */
 public class CountdownLatchDemo {
     public static void main(String[] args) throws InterruptedException {
