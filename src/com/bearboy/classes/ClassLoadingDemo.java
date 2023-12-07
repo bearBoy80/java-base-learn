@@ -6,7 +6,8 @@ import java.nio.file.Files;
 import java.util.stream.Stream;
 
 /**
- * 类加载过程
+ * 实现自定义classloader，实现类隔离效果
+ * 不同classloader 加载同一个user类，这个user类是不想等的。
  */
 public class ClassLoadingDemo {
 
@@ -17,7 +18,6 @@ public class ClassLoadingDemo {
         // 加载某个 Class 对象
         System.out.println( ClassLoadingDemo.class.getProtectionDomain().getCodeSource().getLocation());
         String className = "com.bearboy.classes.User";
-
         String classFileName = className.replace('.', '/').concat(".class");
         String classPath = System.getProperty("user.dir") + "/out/production/java-base-learn";
         // User.class 类文件的绝对路径
@@ -41,8 +41,8 @@ public class ClassLoadingDemo {
         // 重新替换掉线程上下文 ClassLoader
         // myClassLoader -> Thread.currentThread().getContextClassLoader()
         Thread.currentThread().setContextClassLoader(myClassLoader);
-        // 老的线程上下文 ClassLoader 是 MyClassLoader 的 parent，由于双亲委派，及时是 MyClassLoader 重新调用
-        // loadClass(String) 方法，也不会重新加载
+        // 老的线程上下文 ClassLoader 是 MyClassLoader 的 parent，由于双亲委派，即使 MyClassLoader 重新调用
+        // loadClass(String) 方法，也不会重新加载。因为之前classLoader已经加载过user类了，具体可以loadClass看下里面的代码
         Class<?> userClassFromMyClassLoader = classLoader.loadClass(className);
         System.out.println("userClass == userClassFromMyClassLoader ? " + (userClass == userClassFromMyClassLoader));
 
