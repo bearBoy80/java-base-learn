@@ -13,7 +13,7 @@ public class NioBlockingEchoClient {
         try {
             channel = SocketChannel.open();
             channel.connect(new InetSocketAddress("localhost", 8080));
-            Chat chat = new Chat("服务器",null,channel.socket());
+            NioChat chat = new NioChat("服务器",null,channel);
             chat.chatting();
         } catch (IOException e) {
             e.printStackTrace();

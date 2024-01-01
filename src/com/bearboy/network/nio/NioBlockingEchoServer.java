@@ -19,7 +19,7 @@ public class NioBlockingEchoServer {
             ServerSocketChannel serverchannel =ServerSocketChannel.open();
             serverchannel.bind(new InetSocketAddress("localhost",8080));
             SocketChannel sc = serverchannel.accept();
-            Chat chat = new Chat("客户端", "你已经成功连到我。我们可以开始对话了。", sc.socket());
+            NioChat chat = new NioChat("客户端", "你已经成功连到我。我们可以开始对话了。", sc);
             chat.chatting();
             sc.close();
             serverchannel.close();
